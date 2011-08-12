@@ -119,22 +119,6 @@ class QueueBundle
       end
     end
   end
-  def empty?(index = nil)
-    if index.nil?
-      active_queues.inject{|total,y|  (!total || !y) ? false : true }  # if it sees a false then it is not empty
-    else
-      queue = @queues[index]
-      
-      if queue.nil? 
-        raise QueueNotFound.new("Queue not found for #{key}")
-      elsif queue == :reassigned
-        raise QueueNotFound.new("Queue reassigned")
-      else
-        queue.empty?
-      end
-    end
-  end
-  
   def length(index = nil)
     if index.nil?
       active_queues.map {|queue| queue.length}.inject{|sum,x| sum + x }
